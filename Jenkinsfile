@@ -36,4 +36,10 @@ pipeline {
             }
         }
     }
+
+    post {
+        always{
+            junit 'test-results/jnit.xml'git
+        }
+    }
 }
