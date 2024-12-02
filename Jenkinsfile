@@ -35,10 +35,10 @@ pipeline {
                 sh '''
                     npm install -g serve
                     echo "Current working directory after npm install -g serve: $PWD"
+                    echo "Ls after module serve: $(ls -la /var/jenkins_home/workspace/learn-Jenkins-app)"
+
                     node_modules/serve -s build
-                    echo "Current working directory after module serve: $PWD"
                     npx playwright test
-                    echo "Current working directory after npx playwright test: $PWD"
                 '''
             }
         }
