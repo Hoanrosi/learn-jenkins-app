@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     stages {
+
+        /*
         stage('Build') {
             agent {
                 docker {
@@ -20,26 +22,27 @@ pipeline {
                 '''
             }
         }
-
+        */
         stage('Test') {
             agent {
                 docker {
-                    image 'node:23.3.0-slim'
+                    image 'mcr.microsoft.com/playwright:v1.49.0-noble'
                     reuseNode true
                 }
             }
             steps {
                 sh '''
-                    test -f build/index.html
-                    npm test
+                    npm install -g serve
+                    serve -s build
+                    npx playwright test
                 '''
             }
         }
     }
 
-    post {
-        always{
-            junit 'test-results/jnit.xml'git
-        }
-    }
+    // post {
+    //     always{
+    //         junit 'test-results/jnit.xml'
+    //     }
+    // }
 }
