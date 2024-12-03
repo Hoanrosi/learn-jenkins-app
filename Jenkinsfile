@@ -23,14 +23,15 @@ pipeline {
         stage('Deploy') {
              agent {
                 docker {
-                    image 'node:23.3.0-slim'
+                    image 'node:23.3.0'
                     reuseNode true
                 }
             }
             steps {
                 sh '''
+                    apt-get update && apt-get install -y build-essential libvips-dev
                     npm install netlify-cli
-                    netlify --version
+                    node_modules/.bin/netlify --version
                 '''
             }
 
