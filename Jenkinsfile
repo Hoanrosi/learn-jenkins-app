@@ -3,7 +3,6 @@ pipeline {
 
     stages {
 
-        /*
         stage('Build') {
             agent {
                 docker {
@@ -22,19 +21,33 @@ pipeline {
                 '''
             }
         }
-        */
+
+        stage('Test') {
+            agent {
+                docker {
+                    image 'node:23.3.0-slim'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    node --version
+                '''
+            }
+        }
+
         stage('E2E') {
             agent {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.49.0-noble'
                     reuseNode true
-                    args '-u root:root'
                 }
             }
             steps {
                 sh '''
                     npm install serve
-                    node_modules/.bin/serve -s build
+                    node_modules/.bin/serve -s build &
+                    sleep 10
                     npx playwright test
                 '''
             }
