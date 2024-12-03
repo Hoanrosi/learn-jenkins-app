@@ -3,9 +3,25 @@ pipeline {
 
     stages {
 
-/*
-        stage('Build') {
-            agent {
+        // stage('E2E') {
+        //     agent {
+        //         docker {
+        //             image 'mcr.microsoft.com/playwright:v1.49.0-noble'
+        //             reuseNode true
+        //         }
+        //     }
+        //     steps {
+        //         sh '''
+        //             npm install serve
+        //             node_modules/.bin/serve -s build &
+        //             sleep 10
+        //             npx playwright test
+        //         '''
+        //     }
+        // }
+
+        stage('Deploy') {
+             agent {
                 docker {
                     image 'node:23.3.0-slim'
                     reuseNode true
@@ -13,47 +29,11 @@ pipeline {
             }
             steps {
                 sh '''
-                    ls -la
-                    node --version
-                    npm --version
-                    npm ci
-                    npm run build
-                    ls -la
+                    npm install netlify-cli
+                    netlify --version
                 '''
             }
-        }
 
-
-        stage('Test') {
-            agent {
-                docker {
-                    image 'node:23.3.0-slim'
-                    reuseNode true
-                }
-            }
-            steps {
-                sh '''
-                    node --version
-                '''
-            }
-        }
-        */
-
-        stage('E2E') {
-            agent {
-                docker {
-                    image 'mcr.microsoft.com/playwright:v1.49.0-noble'
-                    reuseNode true
-                }
-            }
-            steps {
-                sh '''
-                    npm install serve
-                    node_modules/.bin/serve -s build &
-                    sleep 10
-                    npx playwright test
-                '''
-            }
         }
     }
 }
