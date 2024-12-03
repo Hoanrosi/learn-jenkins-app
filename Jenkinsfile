@@ -30,6 +30,7 @@ pipeline {
             steps {
                 sh '''
                     whoami
+                    printenv
                      npm install netlify-cli
                      node_modules/.bin/netlify --version
                 '''
