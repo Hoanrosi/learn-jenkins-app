@@ -29,9 +29,8 @@ pipeline {
             }
             steps {
                 sh '''
-                    apt-get update && apt-get install -y build-essential libvips-dev
-                    npm install netlify-cli
-                    node_modules/.bin/netlify --version
+                    npm install netlify-cli -g
+                    netlify --version
                 '''
             }
 
