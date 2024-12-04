@@ -21,18 +21,18 @@ pipeline {
         // }
 
         stage('Deploy') {
-            //  agent {
-            //     docker {
-            //         image 'node:23.3.0'
-            //         reuseNode true
-            //     }
-            // }
+             agent {
+                docker {
+                    image 'node:23.3.0-slim'
+                    reuseNode true
+                }
+            }
             steps {
                 sh '''
                     whoami
                     printenv
-                     npm install netlify-cli
-                     node_modules/.bin/netlify --version
+                    npm install netlify-cli
+                    node_modules/.bin/netlify --version
                 '''
             }
 
