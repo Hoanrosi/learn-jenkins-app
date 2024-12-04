@@ -28,9 +28,7 @@ pipeline {
             //     }
             // }
             steps {
-                sh '''
-                    whoami
-                    printenv
+                bat '''
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
                 '''
