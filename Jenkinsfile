@@ -21,12 +21,12 @@ pipeline {
         // }
 
         stage('Deploy') {
-             agent {
-                docker {
-                    image 'node:23.3.0-slim'
-                    reuseNode true
-                }
-            }
+            //  agent {
+            //     docker {
+            //         image 'node:23.3.0-slim'
+            //         reuseNode true
+            //     }
+            // }
             steps {
                 sh '''
                     whoami
