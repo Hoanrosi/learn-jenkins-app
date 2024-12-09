@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[site]
+  id = "5ba54f49-06f7-4277-bc8a-408f9c84a5d3"
