@@ -35,6 +35,7 @@ pipeline {
             steps {
                 sh '''
                     npm install netlify-cli
+                    echo "build SCM"
                     node_modules/.bin/netlify deploy --prod
                 '''
             }
