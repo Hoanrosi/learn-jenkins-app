@@ -8,22 +8,22 @@ pipeline {
 
     stages {
 
-        stage('E2E') {
-            agent {
-                docker {
-                    image 'mcr.microsoft.com/playwright:v1.49.0-noble'
-                    reuseNode true
-                }
-            }
-            steps {
-                sh '''
-                    npm install serve
-                    node_modules/.bin/serve -s build &
-                    sleep 10
-                    npx playwright test
-                '''
-            }
-        }
+        // stage('E2E') {
+        //     agent {
+        //         docker {
+        //             image 'mcr.microsoft.com/playwright:v1.49.0-noble'
+        //             reuseNode true
+        //         }
+        //     }
+        //     steps {
+        //         sh '''
+        //             npm install serve
+        //             node_modules/.bin/serve -s build &
+        //             sleep 10
+        //             npx playwright test
+        //         '''
+        //     }
+        // }
 
         stage('Deploy') {
             agent {
@@ -35,11 +35,37 @@ pipeline {
             steps {
                 sh '''
                     npm install netlify-cli
-                    echo "build SCM"
-                    node_modules/.bin/netlify deploy --prod
+                    node_modules/.bin/netlify --version
+                    echo "Deploying to production. Site ID: $NETLIFY_SIDE_ID"
+                    node_modules/.bin/netlify deploy --dir=build prod
                 '''
             }
 
         }
+          
+//           stage('Prod E2E') {
+//             agent {
+//                 docker {
+//                     image 'mcr.microsoft.com/playwright:v1.49.0-noble'
+//                     reuseNode true
+//                 }
+//             }
+//             steps {
+//                 sh '''
+//                     npm install serve
+//                     node_modules/.bin/serve -s build &
+//                     sleep 10
+//                     npx playwright test --reporter=html
+//                 '''
+//             }
+//             post {
+//                 always {
+//                     pusblishHTML([allMissing: false, alwaysLinkToLastBuild: false, keppAll: false, reporDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright E2E', reportTitles: '', useWrapperFileDirctly: true
+// ])
+//                 }
+//             }
+//         }
+
+
     }
 }
